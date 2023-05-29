@@ -1,5 +1,7 @@
 from django.contrib.gis.db.models.functions import GeometryDistance
 from django.contrib.gis.geos import Point
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import viewsets
 from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
@@ -14,6 +16,22 @@ class PlaceViewSet(viewsets.ModelViewSet):
     queryset = Place.objects.all()
     serializer_class = PlaceSerializer
 
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                "longitude",
+                OpenApiTypes.FLOAT,
+                description="Longitude of the reference point",
+                required=False
+            ),
+            OpenApiParameter(
+                "latitude",
+                OpenApiTypes.FLOAT,
+                description="Latitude of the reference point",
+                required=False
+            ),
+        ]
+    )
     def list(self, request, *args, **kwargs) -> Response:
         """
         Get the nearest place to the given coordinates if provided,
