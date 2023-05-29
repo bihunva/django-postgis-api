@@ -6,6 +6,9 @@ from rest_framework.test import APIClient
 
 from .models import Place
 
+PLACE_LIST_URL = "place-list"
+PLACE_DETAIL_URL = "place-detail"
+
 
 class PlaceTests(TestCase):
     def setUp(self):
@@ -23,7 +26,7 @@ class PlaceTests(TestCase):
         )
 
     def test_create_place(self):
-        url = reverse("place-list")
+        url = reverse(PLACE_LIST_URL)
         data = {
             "name": "New Place",
             "description": "New Description",
@@ -36,7 +39,7 @@ class PlaceTests(TestCase):
         self.assertEqual(Place.objects.count(), 3)
 
     def test_create_place_missing_coordinates(self):
-        url = reverse("place-list")
+        url = reverse(PLACE_LIST_URL)
         data = {
             "name": "New Place",
             "description": "New Description",
@@ -48,28 +51,28 @@ class PlaceTests(TestCase):
         self.assertEqual(Place.objects.count(), 2)
 
     def test_retrieve_place(self):
-        url = reverse("place-detail", args=[self.place1.pk])
+        url = reverse(PLACE_DETAIL_URL, args=[self.place1.pk])
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["name"], "Place 1")
 
     def test_list_places(self):
-        url = reverse("place-list")
+        url = reverse(PLACE_LIST_URL)
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 2)
 
     def test_list_nearest_place(self):
-        url = reverse("place-list")
+        url = reverse(PLACE_LIST_URL)
         response = self.client.get(url, {"longitude": 2, "latitude": 2})
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["name"], "Place 2")
 
     def test_delete_place(self):
-        url = reverse("place-detail", args=[self.place1.pk])
+        url = reverse(PLACE_DETAIL_URL, args=[self.place1.pk])
         response = self.client.delete(url)
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)

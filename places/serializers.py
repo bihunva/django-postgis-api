@@ -21,8 +21,8 @@ class PlaceSerializer(GeoModelSerializer):
         validated_data["geom"] = Point(longitude, latitude)
         return validated_data
 
-    def create(self, validated_data) -> Place:
+    def create(self, validated_data: dict) -> Place:
         return super().create(self.set_point_data(validated_data))
 
-    def update(self, instance, validated_data) -> Place:
+    def update(self, instance: Place, validated_data: dict) -> Place:
         return super().update(instance, self.set_point_data(validated_data))

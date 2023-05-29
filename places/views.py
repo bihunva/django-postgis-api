@@ -5,6 +5,7 @@ from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import viewsets
 from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
+from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
 
 from .models import Place
 from .serializers import PlaceSerializer
@@ -58,6 +59,6 @@ class PlaceViewSet(viewsets.ModelViewSet):
         nearest_place = places.order_by("distance").first()
 
         if not nearest_place:
-            return Response({"message": "No nearest place found."})
+            return Response({"message": "No nearest place found."}, status=HTTP_400_BAD_REQUEST)
 
-        return Response(self.get_serializer(nearest_place).data)
+        return Response(self.get_serializer(nearest_place).data, status=HTTP_200_OK)
