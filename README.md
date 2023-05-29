@@ -5,6 +5,8 @@ This is a Django-based application that allows you to perform CRUD operations on
 ### API Documentation
 The API documentation for this application is available through Swagger. After running the application, you can access the Swagger documentation at http://localhost:8000/api/doc/swagger/. Swagger provides a user-friendly interface to explore and interact with the API endpoints.
 
+You can watch the video presentation of the project here - https://www.loom.com/share/da2a8959174146cf9074683e2b504c48
+
 ### Installation using Docker
 
 <p>Before you begin, make sure you have Docker installed on your computer. To do this, run the following command:</p>
