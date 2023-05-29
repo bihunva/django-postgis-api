@@ -1,4 +1,4 @@
-from django.contrib.gis.db.models.functions import GeometryDistance
+from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import Point
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema, OpenApiParameter
@@ -54,7 +54,7 @@ class PlaceViewSet(viewsets.ModelViewSet):
         Find the nearest place to the given reference point,
         returning a corresponding message if no place is found.
         """
-        places = self.queryset.annotate(distance=GeometryDistance("geom", point))
+        places = self.queryset.annotate(distance=Distance("geom", point))
         nearest_place = places.order_by("distance").first()
 
         if not nearest_place:

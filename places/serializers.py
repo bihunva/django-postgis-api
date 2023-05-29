@@ -15,15 +15,14 @@ class PlaceSerializer(GeoModelSerializer):
         read_only_fields = ("id", "geom")
 
     @staticmethod
-    def set_point_data(validated_data:  dict) -> Point:
+    def set_point_data(validated_data:  dict) -> dict:
         longitude = validated_data.pop("longitude")
         latitude = validated_data.pop("latitude")
-        return Point(longitude, latitude)
+        validated_data["geom"] = Point(longitude, latitude)
+        return validated_data
 
     def create(self, validated_data) -> Place:
-        validated_data["geom"] = self.set_point_data(validated_data)
-        return super().create(validated_data)
+        return super().create(self.set_point_data(validated_data))
 
     def update(self, instance, validated_data) -> Place:
-        validated_data["geom"] = self.set_point_data(validated_data)
-        return super().update(instance, validated_data)
+        return super().update(instance, self.set_point_data(validated_data))
