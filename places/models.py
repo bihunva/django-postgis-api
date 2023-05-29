@@ -1,3 +1,11 @@
-from django.db import models
+from django.contrib.gis.db import models
 
-# Create your models here.
+
+class Place(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+    geom = models.PointField(help_text="The coordinates of the place")
+
+    def __str__(self) -> str:
+        return self.name
+
