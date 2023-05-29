@@ -3,7 +3,7 @@
 This is a Django-based application that allows you to perform CRUD operations on places, as well as find the nearest place. The application utilizes PostgreSQL with PostGIS extension for spatial database functionality. Docker Compose is used to simplify the deployment process.
 
 ### API Documentation
-The API documentation for this application is available through Swagger. After running the application, you can access the Swagger documentation at http://localhost:8000/swagger/. Swagger provides a user-friendly interface to explore and interact with the API endpoints.
+The API documentation for this application is available through Swagger. After running the application, you can access the Swagger documentation at http://localhost:8000/api/doc/swagger/. Swagger provides a user-friendly interface to explore and interact with the API endpoints.
 
 ### Installation using Docker
 
